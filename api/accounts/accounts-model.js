@@ -8,11 +8,16 @@ const getById = (id) => {
   return db("accounts").where("id", id).first();
 };
 
-const create = (account) => {};
+const create = async (account) => {
+  const [id] = db("accounts").insert(account);
+  return getById(id);
+};
 
 const updateById = (id, account) => {};
 
-const deleteById = (id) => {};
+const deleteById = (id) => {
+  return db("accounts").where("id", id).del();
+};
 
 module.exports = {
   getAll,
