@@ -16,6 +16,7 @@ exports.checkAccountPayload = (req, res, next) => {
   if (error.message) {
     next(error);
   } else {
+    req.body.name = name.trim();
     next();
   }
 };
@@ -23,7 +24,7 @@ exports.checkAccountPayload = (req, res, next) => {
 exports.checkAccountNameUnique = async (req, res, next) => {
   try {
     const existingName = await db("accounts")
-      .where("name", req.body.name.trim())
+      .where("name", req.body.name)
       .first();
     if (existingName) {
       next({ status: 400, message: "that name is taken" });
